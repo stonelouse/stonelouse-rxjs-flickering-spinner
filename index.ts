@@ -46,9 +46,10 @@ fromEvent($startButton, "click")
   .pipe(
     exhaustMap(() => {
       const fetch$ = fetchData().pipe(share());
-      return forkJoin([createTimer(fetch$), fetch$])
+      return forkJoin([createTimer(fetch$), fetch$]);
     })
-  ).subscribe();
+  )
+  .subscribe();
 
 function fetchData() {
   const finishXhrAfter = +$finishXhrAfter.value;
@@ -103,7 +104,7 @@ function createTimer(notifier$: Observable<any>) {
   });
 }
 
-function formatTimer(curr: nummber) {
+function formatTimer(curr: number) {
   curr /= 1000;
   return curr.toFixed(1);
 }
