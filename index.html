@@ -1,0 +1,104 @@
+<link
+  href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+  rel="stylesheet"
+/>
+
+<style>
+  .loader {
+    border-top-color: #3498db;
+    -webkit-animation: spinner 1.5s linear infinite;
+    animation: spinner 1.5s linear infinite;
+  }
+
+  @-webkit-keyframes spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  #timer {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+</style>
+
+<article
+  class="border w-3/4 mx-auto border-gray-400 rounded-lg md:p-4 bg-white sm:py-3 py-4 px-2 m-4"
+>
+  <form class="w-full max-w-lg">
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-1/2 px-3 md:mb-0">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="grid-first-name"
+        >
+          Finish XHR After (ms)
+        </label>
+        <input
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          id="finish-xhr-after"
+          type="text"
+        />
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="grid-last-name"
+        >
+          Show Spinner After (ms)
+        </label>
+        <input
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          id="show-spinner-after"
+          type="text"
+        />
+      </div>
+      <div class="w-full md:w-full px-3 mb-1">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="grid-first-name"
+        >
+          Show Spinner For (ms)
+        </label>
+        <input
+          class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+          id="show-spinner-for"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="flex px-3 justify-start">
+      <button
+        id="start-button"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+      >
+        Start
+      </button>
+    </div>
+  </form>
+  <div class="flex justify-center py-4">
+    <div
+      id="spinner"
+      class="hidden loader relative ease-linear rounded-full border-4 border-t-4 border-gray-200 h-16 w-16"
+    ></div>
+  </div>
+  <div class="flex justify-center py-4">
+    <span id="timer">0</span>
+    <span>s</span>
+  </div>
+</article>
