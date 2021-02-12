@@ -16,7 +16,6 @@ import {
   takeUntil,
   last,
   endWith,
-  first,
   share
 } from "rxjs/operators";
 
@@ -57,30 +56,39 @@ function fetchData() {
   const showSpinnerFor = +$showSpinnerFor.value;
 
   const data$ = of("Fetched").pipe(
+    // simulate ajax call
+    tap(_ => console.log(Date.now(), "fetching data starts")),
     delay(finishXhrAfter),
     shareReplay(1),
-    tap(console.log)
+    tap(_ => console.log(Date.now(), "fetching data completed"))
   );
 
   const showSpinner$ = of(true).pipe(
+    tap(_ => console.log(Date.now(), "showing spinner start")),
     delay(showSpinnerAfter),
-    tap(val => toggleSpinner(val))
+    tap(val => toggleSpinner(val)),
+    tap(_ => console.log(Date.now(), "showing spinner completed"))
   );
 
-  // NEW
-  // we can omit the `last()` because timer does not emit periodically
-  // if you do *not* pass 2 arguments
-  const delaySpinner$ = timer(showSpinnerFor);
+  /*
+    avoids spinner flickering
+   */
+  const keepSpinnerAliveForAtLeast$ = timer(showSpinnerFor);
 
-  // OLD
-  // const delaySpinner$ = timer(showSpinnerFor).pipe(last());
-
+  /*
+    sequentially emits all values from given Observable and then 
+    ... moves on to the next.
+   */
   const spinner$ = concat(
     showSpinner$,
-    delaySpinner$,
+    keepSpinnerAliveForAtLeast$,
     data$.pipe(tap(() => toggleSpinner(false)))
   );
 
+  /*
+    We don't want to show the spinner
+    ... if the fetch ist fast enough.
+   */
   return race(data$, spinner$);
 }
 
